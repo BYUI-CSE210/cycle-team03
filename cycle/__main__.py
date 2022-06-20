@@ -17,6 +17,8 @@ def main():
 
     # create the cast
     cast = Cast()
+    # add acotors: Player 1, Player 2, Player 1's Score, Player 2's score.
+
 
     # start the game
     keyboard_service = KeyboardService()

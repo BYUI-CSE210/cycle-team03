@@ -1,0 +1,1 @@
+# Start writing code from here, the score.py file from Snake can be help
