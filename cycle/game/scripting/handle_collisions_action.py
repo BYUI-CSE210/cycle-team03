@@ -26,4 +26,43 @@ class HandleCollisionsAction(Action):
             cast (Cast): The cast of Actors in the game.
             script (Script): The script of Actions in the game.
         """
-        pass
+        if not self._is_game_over:
+            self._handle_segment_collision(cast)
+            self._handle_game_over(cast)
+
+    def _handle_segment_collision(self, cast):
+        """Sets the game over flag if a player collides with one of one of its own segments or the other players segments.
+        
+        Args:
+            cast (Cast): The cast of Actors in the game.
+        """
+        trail = cast.get_first_actor("cyclist")
+        head = trail.get_segments()[0]
+        segments = trail.get_segments()[1:]
+
+        for segment in segments:
+            if head.get_position().equals(segment.get_position()):
+                self._is_game_over = True
+
+    def _handle_game_over(self, cast):
+        """Shows the 'Game Over' message and turns the losing cyclist white if the game is over.
+        
+        Args:
+            cast (Cast): The cast of Actors in the game.
+        """
+        if self._is_game_over:
+            trail = cast.get_first_actor("cyclist")
+            segments = trail.get_segments()
+
+            x = int(constants.MAX_X / 2)
+            y = int(constants.MAX_Y / 2)
+            position = Point(x, y)
+
+            message = Actor()
+            message.set_text("GAME OVER!")
+            message.set_position(position)
+            cast.add_actor("messages", message)
+
+            for segment in segments:
+                segment.set_color(constants.WHITE)
+            
