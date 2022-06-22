@@ -47,7 +47,7 @@ class Player(Actor):
             segment.set_position(position)
             segment.set_velocity(velocity)
             segment.set_text("#")
-            segment.set_color(constants.GREEN)
+            segment.set_color(self._player_color)
             self._segments.append(segment)
 
     def turn_head(self, velocity):
@@ -55,10 +55,12 @@ class Player(Actor):
     
     def _prepare_body(self):
         if self._player_position == 1:
-            x = int(constants.MAX_X / 4.5)
-            color = self._player_color()
+            x = int((constants.MAX_X * constants.CELL_SIZE) / 4)
+            color = self._player_color
         else:
-            x = int(constants.MAX_X - (constants.MAX_X/ 4.5))
+            x = int((constants.MAX_X * constants.CELL_SIZE) - ((constants.MAX_X * constants.CELL_SIZE)/ 4))
+            self._player_color = constants.GREEN
+            color = self._player_color
 
         y = int(constants.MAX_Y / 3)
 
@@ -66,7 +68,6 @@ class Player(Actor):
             position = Point(x , y + i * constants.CELL_SIZE)
             velocity = Point(0, -constants.CELL_SIZE)
             text = "8" if i == 0 else "#"
-            color = constants.YELLOW if i == 0 else constants.GREEN
             
             segment = Actor()
             segment.set_position(position)

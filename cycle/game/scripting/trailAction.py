@@ -13,4 +13,6 @@ class MakeTrailAction(Action):
         Args:
             
         """
-        pass
+        cyclists = cast.get_actors("cyclists")
+        for cyclist in cyclists:
+            cyclist.grow_tail(1)

@@ -1,3 +1,4 @@
+from operator import concat
 import constants
 from game.casting.actor import Actor
 from game.scripting.action import Action
@@ -36,13 +37,25 @@ class HandleCollisionsAction(Action):
         Args:
             cast (Cast): The cast of Actors in the game.
         """
-        trail = cast.get_first_actor("cyclist")
-        head = trail.get_segments()[0]
-        segments = trail.get_segments()[1:]
+        cyclists = cast.get_actors("cyclists")
+        cyclist_1_head = cyclists[0].get_head()
+        cyclist_2_head = cyclists[1].get_head()
+        cyclist_1_segments = cyclists[0].get_segments()[1:]
+        cyclist_2_segments = cyclists[1].get_segments()[1:]
 
-        for segment in segments:
-            if head.get_position().equals(segment.get_position()):
+        scores = cast.get_actors("scores")
+        
+        for segment in cyclist_1_segments:
+            if cyclist_2_head.get_position().equals(segment.get_position()):
+                scores[1].add_points(1)
                 self._is_game_over = True
+
+        for segment in cyclist_2_segments:
+            if cyclist_1_head.get_position().equals(segment.get_position()):
+                scores[0].add_points(1)
+                self._is_game_over = True
+
+
 
     def _handle_game_over(self, cast):
         """Shows the 'Game Over' message and turns the losing cyclist white if the game is over.
@@ -51,8 +64,10 @@ class HandleCollisionsAction(Action):
             cast (Cast): The cast of Actors in the game.
         """
         if self._is_game_over:
-            trail = cast.get_first_actor("cyclist")
-            segments = trail.get_segments()
+            cyclists = cast.get_actors("cyclists")
+            cyclist_1_segments = cyclists[0].get_segments()
+            cyclist_2_segments = cyclists[1].get_segments()
+            segments = concat(cyclist_1_segments, cyclist_2_segments)
 
             x = int(constants.MAX_X / 2)
             y = int(constants.MAX_Y / 2)

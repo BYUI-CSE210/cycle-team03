@@ -1,5 +1,6 @@
-from itertools import cycle
+import constants
 from game.scripting.action import Action
+from game.shared.point import Point
 
 
 class DrawActorsAction(Action):
@@ -28,13 +29,18 @@ class DrawActorsAction(Action):
             script (Script): The script of Actions in the game.
         """
         cyclists = cast.get_actors("cyclists")
+        scores = cast.get_actors("scores")
+        messages = cast.get_actors("messages")
+        scores[1].set_position(Point(constants.MAX_X - (constants.CELL_SIZE * 15), 0))
 
         self._video_service.clear_buffer()
         for cyclist in cyclists:
             cyclist_segments = cyclist.get_segments()
-            messages = cast.get_actors("messages")
             self._video_service.draw_actor(cyclist)
             self._video_service.draw_actors(cyclist_segments)
-            self._video_service.draw_actors(messages, True)
+        for score in scores:
+            self._video_service.draw_actor(score)
+        self._video_service.draw_actors(messages, True)
+
 
         self._video_service.flush_buffer()

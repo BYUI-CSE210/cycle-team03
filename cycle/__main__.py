@@ -1,7 +1,7 @@
-from turtle import clear
 import constants
-from cycle.game.casting.player import Player
-
+from game.scripting.trailAction import MakeTrailAction
+from game.casting.player import Player
+from game.casting.score import Score
 from game.casting.cast import Cast
 from game.scripting.script import Script
 from game.scripting.control_actors_action import ControlActorsAction
@@ -22,6 +22,8 @@ def main():
     # add acotors: Player 1, Player 2, Player 1's Score, Player 2's score.
     cast.add_actor("cyclists", Player())
     cast.add_actor("cyclists", Player(2))
+    cast.add_actor("scores", Score())
+    cast.add_actor("scores", Score(2))
 
     # start the game
     keyboard_service = KeyboardService()
@@ -30,6 +32,7 @@ def main():
     script = Script()
     script.add_action("input", ControlActorsAction(keyboard_service))
     script.add_action("update", MoveActorsAction())
+    script.add_action("update", MakeTrailAction())
     script.add_action("update", HandleCollisionsAction())
     script.add_action("output", DrawActorsAction(video_service))
 
