@@ -1,3 +1,4 @@
+from itertools import cycle
 from game.scripting.action import Action
 
 
@@ -26,7 +27,14 @@ class DrawActorsAction(Action):
             cast (Cast): The cast of Actors in the game.
             script (Script): The script of Actions in the game.
         """
+        cyclists = cast.get_actors("cyclists")
 
         self._video_service.clear_buffer()
+        for cyclist in cyclists:
+            cyclist_segments = cyclist.get_segments()
+            messages = cast.get_actors("messages")
+            self._video_service.draw_actor(cyclist)
+            self._video_service.draw_actors(cyclist_segments)
+            self._video_service.draw_actors(messages, True)
 
         self._video_service.flush_buffer()
