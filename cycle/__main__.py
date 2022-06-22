@@ -1,4 +1,6 @@
+from turtle import clear
 import constants
+from cycle.game.casting.player import Player
 
 from game.casting.cast import Cast
 from game.scripting.script import Script
@@ -18,7 +20,8 @@ def main():
     # create the cast
     cast = Cast()
     # add acotors: Player 1, Player 2, Player 1's Score, Player 2's score.
-
+    cast.add_actor("cyclists", Player())
+    cast.add_actor("cyclists", Player(2))
 
     # start the game
     keyboard_service = KeyboardService()

@@ -12,9 +12,11 @@ class Player(Actor):
     Attributes:
         _segments (list): A list containing the segments of the player (reptile)
     """
-    def __init__(self):
+    def __init__(self, player_position = 1):
         super().__init__()
         self._segments = []
+        self._player_position = player_position
+        self._player_color = constants.RED
         self._prepare_body()
 
     def get_segments(self):
@@ -52,12 +54,17 @@ class Player(Actor):
         self._segments[0].set_velocity(velocity)
     
     def _prepare_body(self):
-        x = int(constants.MAX_X / 2)
-        y = int(constants.MAX_Y / 2)
+        if self._player_position == 1:
+            x = int(constants.MAX_X / 4.5)
+            color = self._player_color()
+        else:
+            x = int(constants.MAX_X - (constants.MAX_X/ 4.5))
+
+        y = int(constants.MAX_Y / 3)
 
         for i in range(constants.PLAYER_LENGTH):
-            position = Point(x - i * constants.CELL_SIZE, y)
-            velocity = Point(1 * constants.CELL_SIZE, 0)
+            position = Point(x , y + i * constants.CELL_SIZE)
+            velocity = Point(0, -constants.CELL_SIZE)
             text = "8" if i == 0 else "#"
             color = constants.YELLOW if i == 0 else constants.GREEN
             
