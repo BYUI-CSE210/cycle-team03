@@ -8,7 +8,7 @@ class MakeTrailAction(Action):
     """
 # Edit this
     def execute(self, cast, script):
-        """Executes the move actors action.
+        """Executes the Make trail action.
 
         Args:
             

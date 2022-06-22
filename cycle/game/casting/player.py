@@ -20,6 +20,11 @@ class Player(Actor):
         self._prepare_body()
 
     def get_segments(self):
+        """
+        Returns all segments of the player
+        
+        Args:
+            ...."""
         return self._segments
 
     def move_next(self):
@@ -34,9 +39,16 @@ class Player(Actor):
             trailing.set_velocity(velocity)
 
     def get_head(self):
+        """
+        Returns the first segment of the player"""
         return self._segments[0]
 
     def grow_tail(self, number_of_segments):
+        """Increases the segment by the number of segments, A segments text is the '#'
+        
+        Args:
+            number_of_segments(int): Number of segments to be added to tail.
+            """
         for _ in range(number_of_segments):
             tail = self._segments[-1]
             velocity = tail.get_velocity()
@@ -51,9 +63,27 @@ class Player(Actor):
             self._segments.append(segment)
 
     def turn_head(self, velocity):
+        """
+        sets the velocity of the head[first segment] of the player
+        
+        Args:
+            velocity : The velocity to turn to
+            """
         self._segments[0].set_velocity(velocity)
     
+    def set_player_color(self,color):
+        """
+        Sets the color of the player
+        
+        Args:
+            color = The color to be set to
+        """
+        self._player_color = color
+
     def _prepare_body(self):
+        """Prepares the body of the player ro the starting positions. Position 1 is the left side of the screen and position 2 is the right.
+        
+        """
         if self._player_position == 1:
             x = int((constants.MAX_X * constants.CELL_SIZE) / 4)
             color = self._player_color

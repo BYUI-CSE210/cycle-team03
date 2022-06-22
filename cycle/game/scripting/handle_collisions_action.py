@@ -81,4 +81,6 @@ class HandleCollisionsAction(Action):
 
             for segment in segments:
                 segment.set_color(constants.WHITE)
+            for cyclist in cyclists:
+                cyclist.set_player_color(constants.WHITE)
             
