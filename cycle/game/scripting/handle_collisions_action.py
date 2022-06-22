@@ -18,7 +18,7 @@ class HandleCollisionsAction(Action):
 
     def __init__(self):
         """Constructs a new HandleCollisionsAction."""
-        self._is_game_over = False
+        self._is_game_over = False 
 
     def execute(self, cast, script):
         """Executes the handle collisions action.
@@ -30,6 +30,7 @@ class HandleCollisionsAction(Action):
         if not self._is_game_over:
             self._handle_segment_collision(cast)
             self._handle_game_over(cast)
+
 
     def _handle_segment_collision(self, cast):
         """Sets the game over flag if a player collides with one of one of its own segments or the other players segments.
